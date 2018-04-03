@@ -15,3 +15,5 @@ Our Class distillery. Whiskey and other things made with grain.
 - [ ] Bottle
 
 - [ ] Sell
+    - How many bottles
+    
