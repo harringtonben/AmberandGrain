@@ -29,14 +29,25 @@ namespace AmberAndGrain.Controllers
         public HttpResponseMessage MashBatch(int batchId)
         {
             var batchRepository = new BatchRepository();
-            var singleBatch = batchRepository.Get(batchId);
+            Batch singleBatch;
+            try
+            {
+               singleBatch = batchRepository.Get(batchId);
+            }
+            catch (Exception)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, $"Batch with {batchId} does not exit. U suk.");
+            }
 
             if (singleBatch.Status == BatchStatus.Created)
             {
                 singleBatch.Status = BatchStatus.Mashed;
+                var updateStatus = batchRepository.Update(singleBatch);
+
+                return updateStatus ? Request.CreateResponse(HttpStatusCode.OK) : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "I suk");
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "U suk");
         }
     }
 
