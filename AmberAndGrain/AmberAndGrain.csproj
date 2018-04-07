@@ -92,6 +92,8 @@
     <Compile Include="Controllers\BatchesController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
     <Compile Include="Models\AddBatchDto.cs" />
+    <Compile Include="Models\Batch.cs" />
+    <Compile Include="Models\BatchStatus.cs" />
     <Compile Include="Models\RecipesDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

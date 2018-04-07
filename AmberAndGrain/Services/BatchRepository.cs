@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using AmberAndGrain.Models;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -12,7 +13,7 @@ namespace AmberAndGrain.Services
     {
         public bool Create(int recipeId, string cooker)
         {
-            using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString))
+            using (var db = createConnection())
             {
                 db.Open();
 
@@ -23,10 +24,48 @@ namespace AmberAndGrain.Services
                                                         VALUES
                                                             (@recipeId
                                                             ,@cooker
-                                                            )", new { recipeId, cooker});
+                                                            )", new {recipeId, cooker});
 
                 return createBatch == 1;
             }
+        }
+
+        public Batch Get(int batchId)
+        {
+            using (var db = createConnection())
+            {
+                db.Open();
+
+                var getSingleBatch = db.QueryFirst<Batch>("select * from batches where id = @batchId", batchId);
+
+                return getSingleBatch;
+            }
+        }
+
+        public bool Update(Batch batch)
+        {
+            using (var db = createConnection())
+            {
+                db.Open();
+
+                var result = db.Execute(@"UPDATE Batches
+                                                       SET 
+	                                                       DateBarrelled = @dateBarrelled
+                                                          ,NumberOfBarrels = @numberOfBottles
+                                                          ,DateBottled = @dateBottled
+                                                          ,NumberOfBottles = @numberOfBottles
+                                                          ,Cooker = @cooker
+                                                          ,PricePerBottle = @pricePerBottle
+                                                          ,NumberOfBottlesLeft = @numberOfBottlesLeft
+                                                          ,Status = @status
+                                                       WHERE id = @id", batch);
+                return result == 1;
+            }
+        }
+
+        private SqlConnection createConnection()
+        {
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
         }
     }
 }
