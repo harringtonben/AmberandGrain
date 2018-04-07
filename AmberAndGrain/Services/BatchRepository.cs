@@ -36,7 +36,7 @@ namespace AmberAndGrain.Services
             {
                 db.Open();
 
-                var getSingleBatch = db.QueryFirst<Batch>("select * from batches where id = @batchId", batchId);
+                var getSingleBatch = db.QueryFirst<Batch>("select * from batches where id = @batchId", new { batchId });
 
                 return getSingleBatch;
             }
