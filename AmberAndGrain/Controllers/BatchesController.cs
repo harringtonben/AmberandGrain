@@ -25,29 +25,25 @@ namespace AmberAndGrain.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Sorry we could not create a batch at this time, please try again later.");
         }
 
-        [HttpPatch, Route("{batchId}/mash")]
+        [Route("{batchId}/mash"), HttpPatch]
         public HttpResponseMessage MashBatch(int batchId)
         {
-            var batchRepository = new BatchRepository();
-            Batch singleBatch;
-            try
-            {
-               singleBatch = batchRepository.Get(batchId);
-            }
-            catch (Exception)
-            {
-                return Request.CreateErrorResponse(HttpStatusCode.NotFound, $"Batch with {batchId} does not exit. U suk.");
-            }
+            var batchMasher = new BatchMasher();
+            var mashMe = batchMasher.MashBatch(batchId);
 
-            if (singleBatch.Status == BatchStatus.Created)
+            switch (mashMe)
             {
-                singleBatch.Status = BatchStatus.Mashed;
-                var updateStatus = batchRepository.Update(singleBatch);
-
-                return updateStatus ? Request.CreateResponse(HttpStatusCode.OK) : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "I suk");
+                case UpdateStatusResults.NotFound:
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "batchId does not exist");
+                case UpdateStatusResults.Unsuccessful:
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "I suk");
+                case UpdateStatusResults.Success:
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                case UpdateStatusResults.ValidationFailure:
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "U suk");
+                default:
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Nathan Sucks");
             }
-
-            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "U suk");
         }
     }
 
