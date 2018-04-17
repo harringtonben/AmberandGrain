@@ -13,7 +13,7 @@ namespace AmberAndGrain.Services
     {
         public bool Create(RecipesDto recipe)
         {
-            using (var db = new SqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString))
+            using (var db = CreateConnection())
             {
                 db.Open();
 
@@ -34,6 +34,24 @@ namespace AmberAndGrain.Services
 
                 return createRecipe == 1;
             }
+        }
+
+        public List<RecipesDto> Get()
+        {
+            using (var db = CreateConnection())
+            {
+                db.Open();
+
+                var recipes = db.Query<RecipesDto>("select * from recipes").ToList();
+
+                return recipes;
+            }
+
+        }
+
+        private SqlConnection CreateConnection()
+        {
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["Main"].ConnectionString);
         }
     }
 }

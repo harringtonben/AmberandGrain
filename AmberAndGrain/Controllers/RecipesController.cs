@@ -23,5 +23,14 @@ namespace AmberAndGrain.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Sorry we could not create a recipe at this time, please try again later.");
         }
 
+        [HttpGet, Route("")]
+        public HttpResponseMessage GetAllRecipes()
+        {
+            var recipeRepository = new RecipeRepository();
+            var getRecipes = recipeRepository.Get();
+
+            return Request.CreateResponse(HttpStatusCode.OK, getRecipes);
+        }
+
     }
 }
