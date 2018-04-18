@@ -52,6 +52,11 @@ namespace AmberAndGrain.Controllers
         [HttpPost]
         public ActionResult Edit(int id, RecipesDto recipe)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(recipe);
+            }
+
             var repo = new RecipeRepository();
             repo.Update(recipe, id);
 
