@@ -23,6 +23,5 @@ namespace AmberAndGrain.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Sorry we could not create a recipe at this time, please try again later.");
         }
 
-
     }
 }
