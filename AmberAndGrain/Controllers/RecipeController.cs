@@ -62,5 +62,14 @@ namespace AmberAndGrain.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            var repo = new RecipeRepository();
+            var recipe = repo.Get(id);
+
+            return View(recipe);
+        }
     }
 }
