@@ -14,5 +14,6 @@ namespace AmberAndGrain.Models
         public virtual int BarrelAge { get; set; }
         public virtual string BarrelMaterial { get; set; }
         public virtual string Creator { get; set; }
+        public virtual ICollection<Batch> Batches { get; set; }
     }
 }
