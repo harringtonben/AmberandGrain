@@ -154,9 +154,13 @@
     <Compile Include="Controllers\BatchesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RecipesController.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddBatchDto.cs" />
+    <Compile Include="Models\AppDbContext.cs" />
     <Compile Include="Models\Batch.cs" />
     <Compile Include="Models\BatchStatus.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\RecipesDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

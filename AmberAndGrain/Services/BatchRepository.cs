@@ -13,21 +13,26 @@ namespace AmberAndGrain.Services
     {
         public bool Create(int recipeId, string cooker)
         {
-            using (var db = createConnection())
-            {
-                db.Open();
+            var db = new AppDbContext();
+            var newBatch = db.Batches.Add(new Batch {RecipeId = recipeId, Cooker = cooker , DateCreated = DateTime.Now});
+            db.SaveChanges();
 
-                var createBatch = db.Execute(@"INSERT INTO Batches
-                                                            (RecipeId
-                                                            ,Cooker
-                                                            )
-                                                        VALUES
-                                                            (@recipeId
-                                                            ,@cooker
-                                                            )", new {recipeId, cooker});
+            return newBatch.Id > 0;
+            //using (var db = createConnection())
+            //{
+            //    db.Open();
 
-                return createBatch == 1;
-            }
+            //    var createBatch = db.Execute(@"INSERT INTO Batches
+            //                                                (RecipeId
+            //                                                ,Cooker
+            //                                                )
+            //                                            VALUES
+            //                                                (@recipeId
+            //                                                ,@cooker
+            //                                                )", new {recipeId, cooker});
+
+            //    return createBatch == 1;
+            //}
         }
 
         public Batch Get(int batchId)
