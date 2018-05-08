@@ -7,12 +7,12 @@ namespace AmberAndGrain.Models
 {
     public class Recipe
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public decimal PercentWheat { get; set; }
-        public decimal PercentCorn { get; set; }
-        public int BarrelAge { get; set; }
-        public string BarrelMaterial { get; set; }
-        public string Creator { get; set; }
+        public virtual int Id { get; set; }
+        public virtual string Name { get; set; }
+        public virtual decimal PercentWheat { get; set; }
+        public virtual decimal PercentCorn { get; set; }
+        public virtual int BarrelAge { get; set; }
+        public virtual string BarrelMaterial { get; set; }
+        public virtual string Creator { get; set; }
     }
 }

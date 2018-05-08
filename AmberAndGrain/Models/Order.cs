@@ -7,10 +7,10 @@ namespace AmberAndGrain.Models
 {
     public class Order
     {
-        public int Id { get; set; }
-        public int BatchId { get; set; }
-        public int NumberOfBottles { get; set; }
-        public DateTime DateOfOrder { get; set; }
-        public int CustomerId { get; set; }
+        public virtual int Id { get; set; }
+        public virtual int BatchId { get; set; }
+        public virtual int NumberOfBottles { get; set; }
+        public virtual DateTime DateOfOrder { get; set; }
+        public virtual int CustomerId { get; set; }
     }
 }
