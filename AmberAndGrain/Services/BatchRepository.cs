@@ -37,14 +37,16 @@ namespace AmberAndGrain.Services
 
         public Batch Get(int batchId)
         {
-            using (var db = createConnection())
-            {
-                db.Open();
+            var db = new AppDbContext();
+            return db.Batches.First(x => x.Id == batchId);
+            //using (var db = createConnection())
+            //{
+            //    db.Open();
 
-                var getSingleBatch = db.QueryFirst<Batch>("select * from batches where id = @batchId", new { batchId });
+            //    var getSingleBatch = db.QueryFirst<Batch>("select * from batches where id = @batchId", new { batchId });
 
-                return getSingleBatch;
-            }
+            //    return getSingleBatch;
+            //}
         }
 
         public bool Update(Batch batch)
